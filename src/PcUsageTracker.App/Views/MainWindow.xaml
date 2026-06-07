@@ -106,13 +106,13 @@
                                    VerticalAlignment="Center" Margin="16,0,0,0" />
 
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button x:Name="MinimizeButton" Content="&#xE921;" Width="46" Height="40"
+                            <Button x:Name="MinimizeButton" Content="─" Width="46" Height="40"
                                     Click="Minimize_Click"
                                     Style="{StaticResource TitleBarButtonStyle}" />
-                            <Button x:Name="MaximizeButton" Content="&#xE922;" Width="46" Height="40"
+                            <Button x:Name="MaximizeButton" Content="□" Width="46" Height="40"
                                     Click="Maximize_Click"
                                     Style="{StaticResource TitleBarButtonStyle}" />
-                            <Button x:Name="CloseButton" Content="&#xE8BB;" Width="46" Height="40"
+                            <Button x:Name="CloseButton" Content="✕" Width="46" Height="40"
                                     Click="Close_Click"
                                     Style="{StaticResource TitleBarCloseButtonStyle}" />
                         </StackPanel>

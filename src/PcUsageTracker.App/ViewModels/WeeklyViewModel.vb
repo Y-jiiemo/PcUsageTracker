@@ -61,7 +61,9 @@ Namespace ViewModels
         End Sub
 
         Public Sub StartAutoRefresh()
+#Disable Warning BC42358
             LoadDataAsync()
+#Enable Warning BC42358
             If Not _refreshTimer.IsEnabled Then
                 _refreshTimer.Start()
             End If
@@ -71,8 +73,10 @@ Namespace ViewModels
             _refreshTimer.Stop()
         End Sub
 
-        Private Async Sub OnRefreshTick(sender As Object, e As EventArgs)
-            Await LoadDataAsync()
+        Private Sub OnRefreshTick(sender As Object, e As EventArgs)
+#Disable Warning BC42358
+            LoadDataAsync()
+#Enable Warning BC42358
         End Sub
 
         Public Async Function LoadDataAsync() As Task

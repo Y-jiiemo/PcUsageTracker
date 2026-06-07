@@ -41,9 +41,9 @@ Class MainWindow
     Protected Overrides Sub OnStateChanged(e As EventArgs)
         MyBase.OnStateChanged(e)
         If WindowState = WindowState.Maximized Then
-            MaximizeButton.Content = "&#xE923;"
+            MaximizeButton.Content = "🗗"
         Else
-            MaximizeButton.Content = "&#xE922;"
+            MaximizeButton.Content = "□"
         End If
     End Sub
 

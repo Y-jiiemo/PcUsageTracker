@@ -14,7 +14,9 @@ Namespace ViewModels
                 Return _currentView
             End Get
             Set(value As ObservableObject)
+                Dim oldView = _currentView
                 If SetProperty(_currentView, value) Then
+                    StopCurrentView(oldView)
                     If TypeOf value Is DashboardViewModel Then
                         DirectCast(value, DashboardViewModel).StartAutoRefresh()
                     ElseIf TypeOf value Is WeeklyViewModel Then
@@ -55,6 +57,14 @@ Namespace ViewModels
 
         Private Sub NavigateToSettings()
             CurrentView = New SettingsViewModel()
+        End Sub
+
+        Private Shared Sub StopCurrentView(view As ObservableObject)
+            If TypeOf view Is DashboardViewModel Then
+                DirectCast(view, DashboardViewModel).StopAutoRefresh()
+            ElseIf TypeOf view Is WeeklyViewModel Then
+                DirectCast(view, WeeklyViewModel).StopAutoRefresh()
+            End If
         End Sub
     End Class
 
