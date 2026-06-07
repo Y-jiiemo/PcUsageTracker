@@ -1,0 +1,126 @@
+<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PcUsageTracker.App"
+        xmlns:views="clr-namespace:PcUsageTracker.App"
+        xmlns:vm="clr-namespace:PcUsageTracker.App.ViewModels"
+        mc:Ignorable="d"
+        Title="PC Usage Tracker"
+        Height="600" Width="860"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        Background="#12121A">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+                      ResizeBorderThickness="6"
+                      GlassFrameThickness="0"
+                      CornerRadius="0" />
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <views:DashboardView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:WeeklyViewModel}">
+            <views:WeeklyView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:HistoryViewModel}">
+            <views:HistoryView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+            <views:SettingsView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Border CornerRadius="12" Background="#12121A" ClipToBounds="True">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="#0F0F18" CornerRadius="12,0,0,12">
+                <StackPanel Margin="0,20,0,0">
+                    <TextBlock Text="PC Tracker" FontSize="18" FontWeight="Bold"
+                               Foreground="{StaticResource AccentColor}"
+                               Margin="16,0,0,20" />
+
+                    <Button Style="{StaticResource NavButtonStyle}"
+                            Command="{Binding NavigateToDashboardCommand}"
+                            Margin="8,2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📊  " FontSize="14" />
+                            <TextBlock Text="仪表盘" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource NavButtonStyle}"
+                            Command="{Binding NavigateToWeeklyCommand}"
+                            Margin="8,2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📅  " FontSize="14" />
+                            <TextBlock Text="周统计" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource NavButtonStyle}"
+                            Command="{Binding NavigateToHistoryCommand}"
+                            Margin="8,2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📋  " FontSize="14" />
+                            <TextBlock Text="历史记录" />
+                        </StackPanel>
+                    </Button>
+
+                    <Separator Background="{StaticResource CardBorder}" Margin="16,12" />
+
+                    <Button Style="{StaticResource NavButtonStyle}"
+                            Command="{Binding NavigateToSettingsCommand}"
+                            Margin="8,2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="⚙  " FontSize="14" />
+                            <TextBlock Text="设置" />
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Text="使用统计" FontSize="11" Foreground="{StaticResource SecondaryText}"
+                               Margin="16,8,0,8" />
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Background="#0F0F18" CornerRadius="0,12,0,0"
+                        MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                    <Grid>
+                        <TextBlock Text="PC Usage Tracker" FontSize="12"
+                                   Foreground="{StaticResource SecondaryText}"
+                                   VerticalAlignment="Center" Margin="16,0,0,0" />
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button x:Name="MinimizeButton" Content="&#xE921;" Width="46" Height="40"
+                                    Click="Minimize_Click"
+                                    Style="{StaticResource TitleBarButtonStyle}" />
+                            <Button x:Name="MaximizeButton" Content="&#xE922;" Width="46" Height="40"
+                                    Click="Maximize_Click"
+                                    Style="{StaticResource TitleBarButtonStyle}" />
+                            <Button x:Name="CloseButton" Content="&#xE8BB;" Width="46" Height="40"
+                                    Click="Close_Click"
+                                    Style="{StaticResource TitleBarCloseButtonStyle}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <ContentControl Grid.Row="1" Content="{Binding CurrentView}" />
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

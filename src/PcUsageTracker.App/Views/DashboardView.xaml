@@ -1,0 +1,79 @@
+<UserControl x:Class="DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:PcUsageTracker.App.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="700">
+
+    <UserControl.Resources>
+        <converters:SecondsToTimeConverter x:Key="SecondsToTimeConverter" />
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="今日概览" FontSize="24" FontWeight="Bold"
+                       Foreground="{StaticResource PrimaryText}" Margin="0,0,0,20" />
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource CardTitleStyle}" Text="活跃使用时间" />
+                        <TextBlock Style="{StaticResource CardValueStyle}" Text="{Binding TodayActiveTime}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="12,0,0,12">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource CardTitleStyle}" Text="空闲时间" />
+                        <TextBlock Style="{StaticResource CardValueStyle}" Text="{Binding TodayIdleTime}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource CardTitleStyle}" Text="使用效率" />
+                        <TextBlock Style="{StaticResource CardValueStyle}" Text="{Binding Efficiency}"
+                                   Foreground="{StaticResource SuccessColor}" FontSize="28" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="12,0,0,12">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource CardTitleStyle}" Text="会话次数" />
+                        <TextBlock Style="{StaticResource CardValueStyle}" Text="{Binding SessionCount}"
+                                   Foreground="{StaticResource AccentColor}" FontSize="28" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource CardTitleStyle}" Text="系统运行时间" />
+                        <TextBlock Style="{StaticResource CardValueStyle}" Text="{Binding SystemUptime}"
+                                   FontSize="22" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

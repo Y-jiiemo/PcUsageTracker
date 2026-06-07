@@ -1,0 +1,117 @@
+<UserControl x:Class="HistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="600"
+             Background="#12121A">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="280" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="24,24,12,24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="历史记录" FontSize="24" FontWeight="Bold"
+                       Foreground="{StaticResource PrimaryText}" Margin="0,0,0,16" />
+
+            <ListBox Grid.Row="1" ItemsSource="{Binding HistoryItems}"
+                     SelectedValue="{Binding SelectedDate}"
+                     SelectedValuePath="Date"
+                     Background="Transparent" BorderThickness="0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="12,10" Margin="0,0,0,4"
+                                Background="{StaticResource CardBackground}"
+                                CornerRadius="8" Cursor="Hand">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Column="0" Width="40" Height="40"
+                                        Background="#7C4DFF" CornerRadius="8"
+                                        Margin="0,0,12,0">
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding DayOfWeek}" FontSize="11"
+                                                   Foreground="White" HorizontalAlignment="Center" />
+                                        <TextBlock Text="{Binding DateDisplay}" FontSize="10"
+                                                   Foreground="#CCCCEE" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding ActiveTime}" FontSize="18"
+                                               FontWeight="Bold" Foreground="{StaticResource PrimaryText}" />
+                                    <TextBlock Text="{Binding SessionCount, StringFormat='{}{0} 个会话'}"
+                                               FontSize="11" Foreground="{StaticResource SecondaryText}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                    <TextBlock Text="{Binding Efficiency}" FontSize="14"
+                                               FontWeight="Bold" Foreground="{StaticResource SuccessColor}"
+                                               HorizontalAlignment="Right" />
+                                    <TextBlock Text="效率" FontSize="11"
+                                               Foreground="{StaticResource SecondaryText}"
+                                               HorizontalAlignment="Right" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <Border Grid.Column="1" Background="#0F0F18" Padding="20">
+            <StackPanel>
+                <TextBlock Text="详情" FontSize="16" FontWeight="Bold"
+                           Foreground="{StaticResource PrimaryText}" Margin="0,0,0,16" />
+
+                <TextBlock Text="{Binding DetailItem.DateDisplay}" FontSize="14"
+                           Foreground="{StaticResource SecondaryText}" Margin="0,0,0,12" />
+
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,8">
+                    <StackPanel>
+                        <TextBlock Text="活跃时间" Style="{StaticResource CardTitleStyle}" />
+                        <TextBlock Text="{Binding DetailItem.ActiveTime}" Style="{StaticResource CardValueStyle}"
+                                   FontSize="28" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,8">
+                    <StackPanel>
+                        <TextBlock Text="空闲时间" Style="{StaticResource CardTitleStyle}" />
+                        <TextBlock Text="{Binding DetailItem.IdleTime}" Style="{StaticResource CardValueStyle}"
+                                   FontSize="28" Foreground="{StaticResource WarningColor}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,8">
+                    <StackPanel>
+                        <TextBlock Text="会话数" Style="{StaticResource CardTitleStyle}" />
+                        <TextBlock Text="{Binding DetailItem.SessionCount}" Style="{StaticResource CardValueStyle}"
+                                   FontSize="28" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="效率" Style="{StaticResource CardTitleStyle}" />
+                        <TextBlock Text="{Binding DetailItem.Efficiency}" Style="{StaticResource CardValueStyle}"
+                                   FontSize="28" Foreground="{StaticResource SuccessColor}" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

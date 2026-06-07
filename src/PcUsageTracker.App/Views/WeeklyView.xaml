@@ -1,0 +1,106 @@
+<UserControl x:Class="WeeklyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:PcUsageTracker.App.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="700">
+
+    <UserControl.Resources>
+        <converters:SecondsToTimeConverter x:Key="SecondsToTimeConverter" />
+        <converters:BoolToAccentConverter x:Key="BoolToAccentConverter" />
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="本周统计" FontSize="24" FontWeight="Bold"
+                       Foreground="{StaticResource PrimaryText}" Margin="0,0,0,20" />
+
+            <Grid Grid.Row="1" Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource CardTitleStyle}" Text="本周总计" />
+                        <TextBlock Style="{StaticResource CardValueStyle}" Text="{Binding WeeklyTotal}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="12,0,0,0">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource CardTitleStyle}" Text="日均使用" />
+                        <TextBlock Style="{StaticResource CardValueStyle}" Text="{Binding DailyAverage}"
+                                   Foreground="{StaticResource AccentColor}" />
+                    </StackPanel>
+                </Border>
+
+                <Button Grid.Column="2" Content="导出 CSV" Width="100" Height="36"
+                        Command="{Binding ExportCommand}"
+                        VerticalAlignment="Center" Margin="12,0,0,0"
+                        Background="{StaticResource AccentColor}" Foreground="White"
+                        BorderThickness="0" Cursor="Hand"
+                        FontSize="13" FontWeight="Medium" />
+            </Grid>
+
+            <Border Grid.Row="2" Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource CardTitleStyle}" Text="每日使用时间" />
+
+                    <ItemsControl ItemsSource="{Binding DailyItems}" Margin="0,12,0,0">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="7" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding ActiveTime}" FontSize="12"
+                                               Foreground="{StaticResource SecondaryText}"
+                                               HorizontalAlignment="Center" Margin="0,0,0,4" />
+                                    <Border Width="40"
+                                            Height="{Binding BarHeight}"
+                                            CornerRadius="6"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom"
+                                            Margin="0,0,0,6">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{Binding IsToday, Converter={StaticResource BoolToAccentConverter}}" />
+                                        </Border.Background>
+                                    </Border>
+                                    <TextBlock Text="{Binding DayName}" FontSize="13" FontWeight="SemiBold"
+                                               HorizontalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{StaticResource PrimaryText}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsToday}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource AccentColor}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding DayLabel}" FontSize="10"
+                                               Foreground="{StaticResource SecondaryText}"
+                                               HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
